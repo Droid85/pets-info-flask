@@ -28,8 +28,10 @@ def add_animal() -> tuple[Response, int]:
     data = AnimalCreate(**request.get_json())
     new_animal = Animal(
         animal_type=data.animal_type,
+        animal_breed=data.animal_breed,
         name=data.name,
-        birth_date=data.birth_date
+        birth_date=data.birth_date,
+        animal_photo=data.animal_photo
     )
     db.session.add(new_animal)
     db.session.commit()
@@ -83,6 +85,10 @@ def delete_animal(pk: int) -> Union[Response, tuple[Response, int]]:
     db.session.commit()
     return jsonify({"message": "Animal deleted successfully!"})
 
+
+@app.route('/health')
+def health():
+    return "Ok", 200
 
 def initialize_app():
     with app.app_context():
